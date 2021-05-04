@@ -11,8 +11,8 @@ import com.google.appinventor.components.common.ComponentCategory;
 import com.google.appinventor.components.runtime.errors.YailRuntimeError;
 
 
-@DesignerComponent(version = 1,  description = "This extension is created bt Sumit kumar for generating string with your desired length.<br>" +
-                   "Kodular Profile<br><a href='https://community.kodular.io/u/sumit1334' target='_blank'>https://community.kodular.io/u/sumit1334</a><br>",
+@DesignerComponent(version = 2,  description = "This extension is created bt Sumit kumar for working with activity.<br>" +
+        "Kodular Profile<br><a href='https://community.kodular.io/u/sumit1334' target='_blank'>https://community.kodular.io/u/sumit1334</a><br>",
         category = ComponentCategory.EXTENSION,
         nonVisible = true,   iconName = "https://community.kodular.io/user_avatar/community.kodular.io/sumit1334/120/82654_2.png")
 @SimpleObject(external = true)
@@ -27,19 +27,19 @@ public class LaunchTool extends AndroidNonvisibleComponent {
     }
 
     @SimpleFunction(description = "Send massage to whatsapp on individual person")
-    public void WhatsappInidvidual(final String countryCode,final int phone,final String massage){
+    public void WhatsappIndividual(final String countryCode,final long phone,final String messege){
         if (appinstalledchecker("com.whatsapp")){
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                String url = "https://api.whatsapp.com/send?phone=" + countryCode + phone + "&text=" + massage;
+                String url = "https://api.whatsapp.com/send?phone=" + countryCode + phone + "&text=" + messege;
                 intent.setData(Uri.parse(url));
                 intent.setPackage("com.whatsapp");
                 context.startActivity(intent);
             }catch (Exception e){
-                ErrorOccured(e.toString());
-        }
+                ErrorOccurred(e.toString());
+            }
         }else {
-            Appnotfound("com.whatsapp");
+            AppNotFound("com.whatsapp");
         }
     }
     @SimpleFunction(description = "Whatsapp group")
@@ -51,10 +51,10 @@ public class LaunchTool extends AndroidNonvisibleComponent {
                 intentWhatsapp.setData(Uri.parse(link));
                 context.startActivity(intentWhatsapp);
             }catch (Exception e){
-                ErrorOccured(e.toString());
+                ErrorOccurred(e.toString());
             }
         }else {
-            Appnotfound("com.whatsapp");
+            AppNotFound("com.whatsapp");
         }
     }
 
@@ -66,7 +66,7 @@ public class LaunchTool extends AndroidNonvisibleComponent {
                 intentyoutube.setData(Uri.parse(link));
                 context.startActivity(intentyoutube);
             }catch (Exception e){
-                ErrorOccured(e.toString());
+                ErrorOccurred(e.toString());
             }
         }else
             throw new YailRuntimeError("link is empty","empty");
@@ -75,15 +75,15 @@ public class LaunchTool extends AndroidNonvisibleComponent {
     public void Telegram(final String link){
         if (appinstalledchecker("org.telegram.messenger")){
             try {
-            Intent intent = new Intent("android.intent.action.VIEW");
-            intent.setPackage("org.telegram.messenger");
-            intent.setData(Uri.parse(link));
-            context.startActivity(intent);
+                Intent intent = new Intent("android.intent.action.VIEW");
+                intent.setPackage("org.telegram.messenger");
+                intent.setData(Uri.parse(link));
+                context.startActivity(intent);
             }catch (Exception e){
-                ErrorOccured(e.toString());
+                ErrorOccurred(e.toString());
             }
         }else{
-            Appnotfound("org.telegram.messenger");
+            AppNotFound("org.telegram.messenger");
         }
     }
 
@@ -98,9 +98,9 @@ public class LaunchTool extends AndroidNonvisibleComponent {
                     context.startActivity(launchIntent);
 
                 } else
-                    Appnotfound(packageName);
+                    AppNotFound(packageName);
             }catch (Exception e){
-                ErrorOccured(e.toString());
+                ErrorOccurred(e.toString());
             }
         }else
             throw new YailRuntimeError("package cannot be empty","package is empty");
@@ -116,10 +116,10 @@ public class LaunchTool extends AndroidNonvisibleComponent {
                 intent.putExtra(Intent.EXTRA_TEXT, massage);
                 context.startActivity(intent);
             }catch (Exception e){
-                ErrorOccured(e.toString());
+                ErrorOccurred(e.toString());
             }
         }else {
-            Appnotfound("com.google.android.gm");
+            AppNotFound("com.google.android.gm");
         }
     }
 
@@ -130,12 +130,12 @@ public class LaunchTool extends AndroidNonvisibleComponent {
     }
 
     @SimpleEvent(description = "Raises when an app not found")
-    public void Appnotfound(String packagename){
-        EventDispatcher.dispatchEvent(this,"Appnotfound",packagename);
+    public void AppNotFound(String packageName){
+        EventDispatcher.dispatchEvent(this,"AppNotFound",packageName);
     }
     @SimpleEvent(description = "Raises when any error occurs")
-    public void ErrorOccured(String error){
-        EventDispatcher.dispatchEvent(this,"ErrorOccured",error);
+    public void ErrorOccurred(String error){
+        EventDispatcher.dispatchEvent(this,"ErrorOccurred",error);
     }
 
     private boolean appinstalledchecker(String packagename){
@@ -147,4 +147,4 @@ public class LaunchTool extends AndroidNonvisibleComponent {
             return false;
     }
 
- }
+}
